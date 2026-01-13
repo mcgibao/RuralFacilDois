@@ -113,6 +113,12 @@ function logout() {
   window.location.href = 'login.html';
 }
 
+const usuario = JSON.parse(localStorage.getItem('usuario'));
+
+if (usuario && usuario.tipo === 'admin') {
+  document.getElementById('admin-panel').style.display = 'block';
+}
+
 
 /* ===== INITT ===== */
 

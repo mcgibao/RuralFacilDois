@@ -1,21 +1,31 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <title>Login — RuralFácil</title>
-  <link rel="stylesheet" href="login.css">
+  <meta charset="UTF-8" />
+  <title>RuralFácil | Login</title>
+  <link rel="stylesheet" href="login.css" />
 </head>
 <body>
-  <div class="login-container">
-    <h1>RuralFácil 🌱</h1>
+  <div class="container">
+    <div class="card">
+      <h1>RuralFácil</h1>
+      <p class="subtitle">Acesso à plataforma</p>
 
-    <input type="email" id="email" placeholder="Email">
-    <input type="password" id="senha" placeholder="Senha">
+      <form id="loginForm">
+        <input type="email" id="email" placeholder="E-mail" required />
+        <input type="password" id="senha" placeholder="Senha" required />
+        <div id="erro" style="color:red;margin-top:10px;"></div>
+        <button type="submit">Entrar</button>
+      </form>
 
-    <button onclick="login()">Entrar</button>
-
-    <p id="erro"></p>
+      <p class="link">
+        Não tem conta? <a href="cadastro.html">Cadastre-se</a>
+      </p>
+    </div>
   </div>
+<div id="admin-panel" style="display:none;">
+  <button onclick="ativarModoAdmin()">Modo Admin</button>
+</div>
 
   <script src="login.js"></script>
 </body>

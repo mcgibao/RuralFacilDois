@@ -1,22 +1,49 @@
-async function login() {
-  const email = document.getElementById('email').value;
-  const senha = document.getElementById('senha').value;
-  const erro = document.getElementById('erro');
+document.getElementById('loginForm').addEventListener('submit', async function (e) {
+  e.preventDefault();
 
-  erro.textContent = '';
+  const email = document.getElementById('email').value.trim();
+  const senha = document.getElementById('senha').value.trim();
+  const erroDiv = document.getElementById('erro');
 
-  const res = await fetch('http://localhost:3000/login', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email, senha })
-  });
+  erroDiv.innerText = '';
 
-  const data = await res.json();
+  try {
+    const res = await fetch('http://localhost:3000/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ email, senha })
+    });
 
-  if (res.ok) {
-    localStorage.setItem('usuario', JSON.stringify(data));
-    window.location.href = 'index.html';
-  } else {
-    erro.textContent = data.error || 'Erro ao fazer login';
-  }
+    const data = await res.json();
+
+    console.log('Resposta do backend:', data);
+
+    if (!res.ok) {
+      erroDiv.innerText = data.erro || 'Erro ao fazer login';
+      return;
+    }
+
+    if (!data.usuario) {
+      erroDiv.innerText = 'Resposta inválida do servidor.';
+      return;
+    }
+
+    // Salva o usuário no navegador
+    localStorage.setItem('usuario', JSON.stringify(data.usuario));
+
+    // Redireciona conforme o tipo
+   if (data.usuario.tipo === 'admin') {
+  window.location.href = 'admin.html';
+} else if (data.usuario.tipo === 'produtor') {
+  window.location.href = 'produtor.html';
+} else {
+  window.location.href = 'index.html';
 }
+
+  } catch (err) {
+    console.error('Erro no login:', err);
+    erroDiv.innerText = 'Erro de conexão com o servidor';
+  }
+});
