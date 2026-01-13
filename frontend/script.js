@@ -114,7 +114,7 @@ function logout() {
 }
 
 
-/* ===== INIT ===== */
+/* ===== INITT ===== */
 
 carregarProdutores();
 carregarProdutos();
