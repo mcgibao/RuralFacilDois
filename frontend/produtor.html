@@ -2,39 +2,38 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8">
-  <title>RuralFácil — Painel do Produtor</title>
+  <title>RuralFácil | Painel do Produtor</title>
   <link rel="stylesheet" href="produtor.css">
 </head>
 <body>
 
 <header class="topo">
-  <h1>🌱 RuralFácil — Painel do Produtor</h1>
+  <h1>Painel do Produtor</h1>
   <button id="logout" class="btn-sair">Sair</button>
 </header>
 
 <main class="container">
-
   <section class="card form-card">
-    <h2>Cadastrar Produto</h2>
-    <button id="btnAbrirModal" class="btn-principal">+ Novo Produto</button>
+    <h2>Cadastrar produto</h2>
+    <button id="btnAbrirModal" class="btn-principal">+ Novo produto</button>
   </section>
 
   <section class="card">
-    <h2>Meus Produtos</h2>
+    <h2>Meus produtos</h2>
     <div id="meus-produtos" class="grid"></div>
   </section>
-
 </main>
+
 <div id="modalProduto" class="modal">
   <div class="modal-content">
     <span id="fecharModal" class="fechar">&times;</span>
-    <h2>Cadastrar Produto</h2>
+    <h2>Cadastrar produto</h2>
 
     <form id="formProduto">
-      <input id="nome" placeholder="Nome do produto" required><br><br>
-      <input id="descricao" placeholder="Descrição" required><br><br>
-      <input id="preco" type="number" step="0.01" placeholder="Preço" required><br><br>
-      <input id="estoque" type="number" placeholder="Estoque" required><br><br>
+      <input id="nome" placeholder="Nome do produto" required>
+      <input id="descricao" placeholder="Descrição" required>
+      <input id="preco" type="number" step="0.01" placeholder="Preço" required>
+      <input id="estoque" type="number" placeholder="Estoque" required>
       <input type="file" id="imagem" accept="image/*">
       <button type="submit">Cadastrar</button>
     </form>

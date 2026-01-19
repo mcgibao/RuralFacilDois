@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <title>Rural Facil | Marketplace</title>
+  <link rel="stylesheet" href="marketplace.css">
+</head>
+<body>
+  <header class="market-top">
+    <div class="market-brand">
+      <div class="brand-mark">RF</div>
+      <div>
+        <strong>Rural Facil</strong>
+        <span>Marketplace local</span>
+      </div>
+    </div>
+    <div class="market-actions">
+      <button id="btnCarrinho" onclick="abrirCarrinho()">Carrinho</button>
+      <button id="btnLogout" onclick="logout()">Sair</button>
+    </div>
+  </header>
+
+  <main class="market-page">
+    <section class="market-hero">
+      <div>
+        <p class="eyebrow">Produtos da agricultura familiar</p>
+        <h1>Escolha direto do produtor, com frescor e historia.</h1>
+        <p class="lead">
+          Compare ofertas, conheca produtores e preencha seu carrinho com alimentos de origem.
+        </p>
+      </div>
+      <div class="filter-card">
+        <label for="filtroProdutor">Filtrar por produtor</label>
+        <select id="filtroProdutor" onchange="filtrar()">
+          <option value="">Todos os produtores</option>
+        </select>
+        <span class="hint">Selecione um produtor para ver so os itens dele.</span>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <h2>Vitrine de produtos</h2>
+        <span class="badge">Atualizado diariamente</span>
+      </div>
+      <div id="produtos" class="grid"></div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+
+  <div id="modalCarrinho" class="modal">
+    <div class="modal-conteudo">
+      <span class="fechar" onclick="fecharCarrinho()">&times;</span>
+      <h2>Seu carrinho</h2>
+      <div id="carrinho"></div>
+      <p id="total"></p>
+      <button onclick="finalizarCompra()">Finalizar compra</button>
+    </div>
+  </div>
+</body>
+</html>

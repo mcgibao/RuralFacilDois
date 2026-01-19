@@ -2,38 +2,46 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
-  <title>RuralFácil</title>
+  <title>Rural Fácil</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header class="top-bar">
-  <h1>RuralFácil 🌱</h1>
+  <div class="page">
+    <header class="topbar">
+      <nav class="nav">
+        <a href="#">Inicio</a>
+        <a href="#">Sobre</a>
+        <a href="#">Contato</a>
+      </nav>
 
-  <div class="top-actions">
-    <button id="btnCarrinho" onclick="abrirCarrinho()">🛒 Carrinho</button>
-    <button id="btnLogout" onclick="logout()">Sair</button>
+      <div class="brand">
+        <img src="http://localhost:3000/uploads/ruralfacil.png" alt="Rural Facil">
+      </div>
+
+      <div class="actions">
+        <a class="btn" href="cadastro.html">Cadastre-se</a>
+        <a class="btn primary" href="login.html">Entrar</a>
+      </div>
+    </header>
+
+    <main class="hero">
+      <div class="hero-text">
+        <h1>Rural Facil</h1>
+        <p>
+          Somos um marketplace que conecta diretamente consumidores a produtores locais da
+          agricultura familiar. Oferecemos produtos frescos e artesanais, promovendo a
+          sustentabilidade e apoiando pequenos agricultores. Navegue, escolha, e receba seus
+          produtos com comodidade enquanto contribui para a economia local e o cultivo sustentavel.
+        </p>
+        <a class="cta" href="login.html">
+          Acesse agora <span>→</span>
+        </a>
+      </div>
+
+      <div class="hero-visual">
+        <img src="http://localhost:3000/uploads/ruralfacil.png" alt="Rural Facil Agricultura Familiar">
+      </div>
+    </main>
   </div>
-</header>
-
-  <h1>RuralFácil — Produtos da Agricultura Familiar</h1>
-  <div class="filtros">
-  <select id="filtroProdutor" onchange="filtrar()">
-  <option value="">Todos os produtores</option>
-</select>
-</div>
-  <div id="produtos" class="grid"></div>
-  <script src="script.js"></script>
-<div id="modalCarrinho" class="modal">
-  <div class="modal-conteudo">
-    <span class="fechar" onclick="fecharCarrinho()">×</span>
-    <h2>Seu carrinho</h2>
-    <div id="carrinho"></div>
-    <p id="total"></p>
-    <button onclick="finalizarCompra()">Finalizar compra</button>
-  </div>
-</div>
-
-
-
 </body>
 </html>

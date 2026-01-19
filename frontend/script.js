@@ -1,7 +1,5 @@
 let carrinho = [];
 
-/* ===== MODAL ===== */
-
 function abrirCarrinho() {
   document.getElementById('modalCarrinho').style.display = 'flex';
 }
@@ -14,8 +12,6 @@ window.onclick = function (event) {
   const modal = document.getElementById('modalCarrinho');
   if (event.target === modal) fecharCarrinho();
 };
-
-/* ===== PRODUTO ===== */
 
 async function carregarProdutos() {
   const produtorId = document.getElementById('filtroProdutor').value;
@@ -33,13 +29,17 @@ async function carregarProdutos() {
     const div = document.createElement('div');
     div.className = 'card';
 
+    const imagem = produto.imagem
+      ? `<img src="http://localhost:3000/uploads/${produto.imagem}" alt="${produto.nome}">`
+      : `<span class="placeholder">RF</span>`;
+
     div.innerHTML = `
-      <div class="card-img">🥕</div>
+      <div class="card-img">${imagem}</div>
       <div class="card-content">
         <h3>${produto.nome}</h3>
         <p>${produto.descricao}</p>
         <div class="preco">R$ ${Number(produto.preco).toFixed(2)}</div>
-        <button onclick="adicionarCarrinho(${produto.id}, '${produto.nome}', ${produto.preco})">
+        <button onclick="adicionarCarrinho(${produto.id}, '${produto.nome}', ${produto.preco}, '${produto.imagem || ''}')">
           Adicionar ao carrinho
         </button>
       </div>
@@ -48,8 +48,6 @@ async function carregarProdutos() {
     container.appendChild(div);
   });
 }
-
-/* ===== PRODUTORES ===== */
 
 async function carregarProdutores() {
   const res = await fetch('http://localhost:3000/produtores');
@@ -69,10 +67,8 @@ function filtrar() {
   carregarProdutos();
 }
 
-/* ===== CARRINHO ===== */
-
-function adicionarCarrinho(id, nome, preco) {
-  carrinho.push({ id, nome, preco });
+function adicionarCarrinho(id, nome, preco, imagem) {
+  carrinho.push({ id, nome, preco, imagem });
   atualizarCarrinho();
 }
 
@@ -92,9 +88,19 @@ function atualizarCarrinho() {
     total += Number(item.preco);
 
     const p = document.createElement('p');
+    const imagem = item.imagem
+      ? `<img src="http://localhost:3000/uploads/${item.imagem}" alt="${item.nome}">`
+      : `<span class="cart-placeholder">RF</span>`;
+
     p.innerHTML = `
-      ${item.nome} — R$ ${Number(item.preco).toFixed(2)}
-      <button onclick="removerItem(${index})">❌</button>
+      <span class="cart-item">
+        <span class="cart-thumb">${imagem}</span>
+        <span class="cart-info">
+          <strong>${item.nome}</strong>
+          <span>R$ ${Number(item.preco).toFixed(2)}</span>
+        </span>
+      </span>
+      <button class="cart-remove" onclick="removerItem(${index})">Remover</button>
     `;
     div.appendChild(p);
   });
@@ -103,11 +109,12 @@ function atualizarCarrinho() {
 }
 
 function finalizarCompra() {
-  alert('Compra finalizada (ainda não salva no banco 😄)');
+  alert('Compra finalizada (ainda nao salva no banco)');
   carrinho = [];
   atualizarCarrinho();
   fecharCarrinho();
 }
+
 function logout() {
   localStorage.removeItem('usuario');
   window.location.href = 'login.html';
@@ -118,9 +125,6 @@ const usuario = JSON.parse(localStorage.getItem('usuario'));
 if (usuario && usuario.tipo === 'admin') {
   document.getElementById('admin-panel').style.display = 'block';
 }
-
-
-/* ===== INITT ===== */
 
 carregarProdutores();
 carregarProdutos();

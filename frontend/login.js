@@ -39,7 +39,7 @@ document.getElementById('loginForm').addEventListener('submit', async function (
 } else if (data.usuario.tipo === 'produtor') {
   window.location.href = 'produtor.html';
 } else {
-  window.location.href = 'index.html';
+  window.location.href = 'marketplace.html';
 }
 
   } catch (err) {
