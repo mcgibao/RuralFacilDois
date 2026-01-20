@@ -1,6 +1,14 @@
+const usuario = JSON.parse(localStorage.getItem('usuario'));
+const token = localStorage.getItem('token');
 let carrinho = [];
 
 function abrirCarrinho() {
+  if (!usuario || !token) {
+    alert('Faca login para acessar o carrinho');
+    window.location.href = 'login.html';
+    return;
+  }
+  carregarCarrinho();
   document.getElementById('modalCarrinho').style.display = 'flex';
 }
 
@@ -8,9 +16,25 @@ function fecharCarrinho() {
   document.getElementById('modalCarrinho').style.display = 'none';
 }
 
+function abrirPedidos() {
+  if (!usuario || !token) {
+    alert('Faca login para acessar seus pedidos');
+    window.location.href = 'login.html';
+    return;
+  }
+  carregarPedidos();
+  document.getElementById('modalPedidos').style.display = 'flex';
+}
+
+function fecharPedidos() {
+  document.getElementById('modalPedidos').style.display = 'none';
+}
+
 window.onclick = function (event) {
   const modal = document.getElementById('modalCarrinho');
+  const modalPedidos = document.getElementById('modalPedidos');
   if (event.target === modal) fecharCarrinho();
+  if (event.target === modalPedidos) fecharPedidos();
 };
 
 async function carregarProdutos() {
@@ -68,13 +92,26 @@ function filtrar() {
 }
 
 function adicionarCarrinho(id, nome, preco, imagem) {
-  carrinho.push({ id, nome, preco, imagem });
-  atualizarCarrinho();
+  if (!usuario || !token) {
+    alert('Faca login para adicionar ao carrinho');
+    window.location.href = 'login.html';
+    return;
+  }
+
+  salvarItemCarrinho(id, 1);
 }
 
-function removerItem(index) {
-  carrinho.splice(index, 1);
-  atualizarCarrinho();
+function removerItem(itemId) {
+  if (!token) return;
+
+  fetch(`http://localhost:3000/carrinho/item/${itemId}`, {
+    method: 'DELETE',
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  })
+    .then(() => carregarCarrinho())
+    .catch(err => console.error('Erro ao remover item:', err));
 }
 
 function atualizarCarrinho() {
@@ -84,8 +121,8 @@ function atualizarCarrinho() {
   div.innerHTML = '';
   let total = 0;
 
-  carrinho.forEach((item, index) => {
-    total += Number(item.preco);
+  carrinho.forEach((item) => {
+    total += Number(item.preco) * Number(item.quantidade || 1);
 
     const p = document.createElement('p');
     const imagem = item.imagem
@@ -97,10 +134,10 @@ function atualizarCarrinho() {
         <span class="cart-thumb">${imagem}</span>
         <span class="cart-info">
           <strong>${item.nome}</strong>
-          <span>R$ ${Number(item.preco).toFixed(2)}</span>
+          <span>R$ ${Number(item.preco).toFixed(2)} x ${item.quantidade}</span>
         </span>
       </span>
-      <button class="cart-remove" onclick="removerItem(${index})">Remover</button>
+      <button class="cart-remove" onclick="removerItem(${item.id})">Remover</button>
     `;
     div.appendChild(p);
   });
@@ -109,21 +146,147 @@ function atualizarCarrinho() {
 }
 
 function finalizarCompra() {
-  alert('Compra finalizada (ainda nao salva no banco)');
-  carrinho = [];
-  atualizarCarrinho();
-  fecharCarrinho();
+  if (!token) return;
+
+  fetch('http://localhost:3000/pedido/finalizar', {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  })
+    .then(res => res.json())
+    .then(data => {
+      if (data.message !== 'Pedido criado') {
+        alert(data.message || 'Erro ao finalizar pedido');
+        return;
+      }
+      alert('Compra finalizada');
+      carrinho = [];
+      atualizarCarrinho();
+      fecharCarrinho();
+    })
+    .catch(() => alert('Erro ao finalizar pedido'));
 }
 
 function logout() {
   localStorage.removeItem('usuario');
+  localStorage.removeItem('token');
   window.location.href = 'login.html';
 }
 
-const usuario = JSON.parse(localStorage.getItem('usuario'));
+const adminPanel = document.getElementById('admin-panel');
+if (usuario && usuario.tipo === 'admin' && adminPanel) {
+  adminPanel.style.display = 'block';
+}
 
-if (usuario && usuario.tipo === 'admin') {
-  document.getElementById('admin-panel').style.display = 'block';
+async function carregarCarrinho() {
+  if (!token) return;
+
+  try {
+    const res = await fetch('http://localhost:3000/carrinho', {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+
+    const itens = await res.json();
+    carrinho = Array.isArray(itens) ? itens : [];
+    atualizarCarrinho();
+  } catch (err) {
+    console.error('Erro ao carregar carrinho:', err);
+  }
+}
+
+async function salvarItemCarrinho(produtoId, quantidade) {
+  try {
+    const res = await fetch('http://localhost:3000/carrinho/item', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify({
+        produto_id: produtoId,
+        quantidade
+      })
+    });
+
+    if (!res.ok) {
+      console.error('Erro ao salvar item no carrinho');
+      return;
+    }
+
+    carregarCarrinho();
+  } catch (err) {
+    console.error('Erro ao salvar item no carrinho:', err);
+  }
+}
+
+async function carregarPedidos() {
+  try {
+    const res = await fetch('http://localhost:3000/pedidos', {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+
+    const pedidos = await res.json();
+    const lista = document.getElementById('listaPedidos');
+    lista.innerHTML = '';
+
+    if (!Array.isArray(pedidos) || pedidos.length === 0) {
+      lista.innerHTML = '<p>Voce ainda nao possui pedidos.</p>';
+      return;
+    }
+
+    pedidos.forEach((pedido) => {
+      const item = document.createElement('div');
+      item.className = 'pedido-item';
+      item.innerHTML = `
+        <div>
+          <strong>Pedido #${pedido.id}</strong>
+          <span>Status: ${pedido.status}</span>
+          <span>Total: R$ ${Number(pedido.total || 0).toFixed(2)}</span>
+        </div>
+        <button onclick="carregarItensPedido(${pedido.id})">Ver itens</button>
+        <div id="pedido-itens-${pedido.id}" class="pedido-itens"></div>
+      `;
+      lista.appendChild(item);
+    });
+  } catch (err) {
+    console.error('Erro ao carregar pedidos:', err);
+  }
+}
+
+async function carregarItensPedido(pedidoId) {
+  try {
+    const res = await fetch(`http://localhost:3000/pedidos/${pedidoId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+
+    const itens = await res.json();
+    const container = document.getElementById(`pedido-itens-${pedidoId}`);
+    container.innerHTML = '';
+
+    if (!Array.isArray(itens) || itens.length === 0) {
+      container.innerHTML = '<p>Nenhum item encontrado.</p>';
+      return;
+    }
+
+    itens.forEach((item) => {
+      const linha = document.createElement('div');
+      linha.className = 'pedido-linha';
+      linha.innerHTML = `
+        <span>${item.nome}</span>
+        <span>${item.quantidade} x R$ ${Number(item.preco_unitario).toFixed(2)}</span>
+      `;
+      container.appendChild(linha);
+    });
+  } catch (err) {
+    console.error('Erro ao carregar itens do pedido:', err);
+  }
 }
 
 carregarProdutores();

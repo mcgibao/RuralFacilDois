@@ -21,7 +21,7 @@ document.getElementById('loginForm').addEventListener('submit', async function (
     console.log('Resposta do backend:', data);
 
     if (!res.ok) {
-      erroDiv.innerText = data.erro || 'Erro ao fazer login';
+      erroDiv.innerText = data.message || data.erro || 'Erro ao fazer login';
       return;
     }
 
@@ -32,6 +32,7 @@ document.getElementById('loginForm').addEventListener('submit', async function (
 
     // Salva o usuário no navegador
     localStorage.setItem('usuario', JSON.stringify(data.usuario));
+    localStorage.setItem('token', data.token);
 
     // Redireciona conforme o tipo
    if (data.usuario.tipo === 'admin') {
@@ -47,3 +48,4 @@ document.getElementById('loginForm').addEventListener('submit', async function (
     erroDiv.innerText = 'Erro de conexão com o servidor';
   }
 });
+

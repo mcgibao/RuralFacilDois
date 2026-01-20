@@ -16,6 +16,7 @@
     </div>
     <div class="market-actions">
       <button id="btnCarrinho" onclick="abrirCarrinho()">Carrinho</button>
+      <button id="btnPedidos" onclick="abrirPedidos()">Pedidos</button>
       <button id="btnLogout" onclick="logout()">Sair</button>
     </div>
   </header>
@@ -56,6 +57,14 @@
       <div id="carrinho"></div>
       <p id="total"></p>
       <button onclick="finalizarCompra()">Finalizar compra</button>
+    </div>
+  </div>
+
+  <div id="modalPedidos" class="modal">
+    <div class="modal-conteudo">
+      <span class="fechar" onclick="fecharPedidos()">&times;</span>
+      <h2>Seus pedidos</h2>
+      <div id="listaPedidos"></div>
     </div>
   </div>
 </body>

@@ -1,12 +1,14 @@
 const usuario = JSON.parse(localStorage.getItem('usuario'));
+const token = localStorage.getItem('token');
 
-if (!usuario || usuario.tipo !== 'admin') {
+if (!usuario || !token || usuario.tipo !== 'admin') {
   alert('Acesso restrito!');
   window.location.href = 'login.html';
 }
 
 document.getElementById('logout').onclick = () => {
   localStorage.removeItem('usuario');
+  localStorage.removeItem('token');
   window.location.href = 'login.html';
 };
 
@@ -39,13 +41,16 @@ async function excluirProduto(id) {
 
   try {
     const res = await fetch(`http://localhost:3000/admin/produto/${id}`, {
-      method: 'DELETE'
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
     });
 
     const data = await res.json();
 
     if (!res.ok) {
-      alert(data.erro || 'Erro ao excluir');
+      alert(data.message || data.erro || 'Erro ao excluir');
       return;
     }
 

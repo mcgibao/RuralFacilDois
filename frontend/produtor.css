@@ -118,6 +118,26 @@ body {
   margin-top: 8px;
 }
 
+.notificacoes {
+  display: grid;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.notificacao-item {
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(23, 36, 31, 0.12);
+  background: #f7f6f2;
+  display: grid;
+  gap: 6px;
+}
+
+.notificacao-item span {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
 .modal {
   display: none;
   position: fixed;
