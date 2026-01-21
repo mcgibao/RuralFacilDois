@@ -1,14 +1,16 @@
-@import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&family=DM+Serif+Display&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Cormorant+Garamond:wght@600;700&display=swap');
 
 :root {
-  --ink: #18221b;
-  --muted: #4f5b54;
-  --primary: #1e6b3a;
-  --primary-dark: #124826;
-  --accent: #f08a5b;
-  --surface: #ffffff;
-  --line: rgba(24, 34, 27, 0.12);
-  --bg: #f6f2ea;
+  --ink: #201b16;
+  --muted: #6b5f55;
+  --primary: #2f6f4e;
+  --primary-strong: #214b36;
+  --accent: #d07a3c;
+  --surface: #fff7ec;
+  --surface-strong: #ffffff;
+  --line: rgba(32, 27, 22, 0.12);
+  --bg: #f4efe6;
+  --shadow: 0 18px 40px rgba(20, 16, 12, 0.12);
 }
 
 * {
@@ -17,11 +19,11 @@
 
 body {
   margin: 0;
-  font-family: 'Sora', sans-serif;
+  font-family: 'Space Grotesk', sans-serif;
   color: var(--ink);
   background:
-    radial-gradient(700px 320px at 12% 18%, rgba(240, 138, 91, 0.16), transparent 60%),
-    linear-gradient(180deg, #ffffff, var(--bg));
+    radial-gradient(640px 320px at 12% 18%, rgba(208, 122, 60, 0.18), transparent 60%),
+    linear-gradient(180deg, #fffaf2, var(--bg));
   min-height: 100vh;
 }
 
@@ -33,7 +35,7 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 18px 28px;
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 250, 242, 0.85);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--line);
 }
@@ -55,14 +57,23 @@ body {
 }
 
 .brand-mark {
-  width: 44px;
-  height: 44px;
-  border-radius: 14px;
-  background: linear-gradient(140deg, var(--primary), #2b925f);
+  width: 46px;
+  height: 46px;
+  border-radius: 16px;
+  background: linear-gradient(140deg, var(--primary), #3b8c61);
   display: grid;
   place-items: center;
   color: #fff;
   font-weight: 700;
+  box-shadow: 0 12px 20px rgba(47, 111, 78, 0.25);
+  overflow: hidden;
+}
+
+.brand-mark img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
 }
 
 .market-actions {
@@ -81,21 +92,21 @@ body {
 }
 
 #btnCarrinho {
-  background: var(--primary);
+  background: linear-gradient(140deg, var(--primary), #3b8c61);
   color: #fff;
-  box-shadow: 0 10px 18px rgba(30, 107, 58, 0.22);
+  box-shadow: 0 10px 18px rgba(47, 111, 78, 0.22);
 }
 
 #btnPedidos {
-  background: #f4efe7;
-  color: var(--primary);
-  border: 1px solid rgba(30, 107, 58, 0.25);
+  background: rgba(47, 111, 78, 0.12);
+  color: var(--primary-strong);
+  border: 1px solid rgba(47, 111, 78, 0.25);
 }
 
 #btnLogout {
   background: #fff;
-  color: var(--primary);
-  border: 1px solid rgba(30, 107, 58, 0.35);
+  color: var(--primary-strong);
+  border: 1px solid rgba(47, 111, 78, 0.35);
 }
 
 .market-page {
@@ -121,8 +132,8 @@ body {
 }
 
 .market-hero h1 {
-  font-family: 'DM Serif Display', serif;
-  font-size: clamp(2rem, 3vw, 3rem);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.1rem, 3.2vw, 3.1rem);
   margin: 10px 0 12px;
 }
 
@@ -133,11 +144,11 @@ body {
 }
 
 .filter-card {
-  background: var(--surface);
+  background: var(--surface-strong);
   padding: 22px;
-  border-radius: 18px;
+  border-radius: 20px;
   border: 1px solid var(--line);
-  box-shadow: 0 12px 26px rgba(20, 30, 24, 0.08);
+  box-shadow: var(--shadow);
 }
 
 .filter-card label {
@@ -149,7 +160,7 @@ body {
   width: 100%;
   padding: 12px 14px;
   border-radius: 12px;
-  border: 1px solid rgba(24, 34, 27, 0.18);
+  border: 1px solid rgba(32, 27, 22, 0.18);
   background: #fff;
 }
 
@@ -169,11 +180,11 @@ body {
 
 .section-head h2 {
   margin: 0;
-  font-family: 'DM Serif Display', serif;
+  font-family: 'Cormorant Garamond', serif;
 }
 
 .badge {
-  background: rgba(240, 138, 91, 0.18);
+  background: rgba(208, 122, 60, 0.2);
   color: var(--accent);
   padding: 6px 12px;
   border-radius: 999px;
@@ -188,18 +199,18 @@ body {
 }
 
 .card {
-  background: var(--surface);
-  border-radius: 20px;
+  background: var(--surface-strong);
+  border-radius: 22px;
   overflow: hidden;
-  border: 1px solid rgba(24, 34, 27, 0.08);
-  box-shadow: 0 12px 30px rgba(15, 30, 22, 0.08);
+  border: 1px solid rgba(32, 27, 22, 0.08);
+  box-shadow: 0 18px 30px rgba(20, 16, 12, 0.08);
   display: flex;
   flex-direction: column;
 }
 
 .card-img {
-  height: 160px;
-  background: linear-gradient(135deg, rgba(30, 107, 58, 0.8), rgba(240, 138, 91, 0.7));
+  height: 170px;
+  background: linear-gradient(135deg, rgba(47, 111, 78, 0.9), rgba(208, 122, 60, 0.75));
   display: grid;
   place-items: center;
   color: #fff;
@@ -215,7 +226,7 @@ body {
 }
 
 .card-content {
-  padding: 18px;
+  padding: 20px;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -224,7 +235,7 @@ body {
 
 .card h3 {
   margin: 0;
-  font-size: 1rem;
+  font-size: 1.05rem;
 }
 
 .card p {
@@ -235,14 +246,14 @@ body {
 }
 
 .card .preco {
-  font-size: 1.05rem;
+  font-size: 1.1rem;
   font-weight: 700;
   color: var(--primary);
 }
 
 .card button {
   border: none;
-  border-radius: 12px;
+  border-radius: 14px;
   padding: 12px;
   background: var(--primary);
   color: #fff;
@@ -254,7 +265,7 @@ body {
   display: none;
   position: fixed;
   inset: 0;
-  background: rgba(10, 16, 13, 0.5);
+  background: rgba(20, 16, 12, 0.55);
   justify-content: center;
   align-items: center;
   z-index: 10;
@@ -262,12 +273,12 @@ body {
 }
 
 .modal-conteudo {
-  background: #fff;
+  background: var(--surface-strong);
   padding: 26px;
-  border-radius: 18px;
+  border-radius: 20px;
   width: 95%;
-  max-width: 420px;
-  box-shadow: 0 18px 40px rgba(15, 30, 22, 0.25);
+  max-width: 440px;
+  box-shadow: 0 22px 50px rgba(15, 12, 10, 0.28);
 }
 
 .fechar {
@@ -281,7 +292,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #f7f6f2;
+  background: #f7f2ea;
   padding: 12px 14px;
   border-radius: 14px;
   margin-bottom: 10px;
@@ -290,11 +301,11 @@ body {
 }
 
 #carrinho button {
-  background: rgba(228, 87, 46, 0.12);
+  background: rgba(208, 122, 60, 0.12);
   border: none;
   font-size: 0.8rem;
   cursor: pointer;
-  color: #b53f1f;
+  color: #a35027;
   padding: 6px 10px;
   border-radius: 999px;
 }
@@ -310,7 +321,7 @@ body {
   height: 52px;
   border-radius: 12px;
   overflow: hidden;
-  background: linear-gradient(135deg, rgba(30, 107, 58, 0.8), rgba(240, 138, 91, 0.7));
+  background: linear-gradient(135deg, rgba(47, 111, 78, 0.9), rgba(208, 122, 60, 0.8));
   display: grid;
   place-items: center;
   color: #fff;
@@ -347,7 +358,7 @@ body {
 .pedido-item button {
   justify-self: start;
   border: none;
-  background: rgba(30, 107, 58, 0.12);
+  background: rgba(47, 111, 78, 0.12);
   color: var(--primary);
   padding: 6px 12px;
   border-radius: 10px;

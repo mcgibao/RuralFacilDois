@@ -1,31 +1,35 @@
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:wght@500;700&family=Manrope:wght@300;400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Cormorant+Garamond:wght@600;700&display=swap');
 
 :root {
-  --ink: #17241f;
-  --muted: #5b6a62;
-  --primary: #1f6f4a;
-  --accent: #e4572e;
-  --surface: #ffffff;
-  --line: rgba(23, 36, 31, 0.12);
+  --ink: #201b16;
+  --muted: #6b5f55;
+  --primary: #2f6f4e;
+  --primary-strong: #214b36;
+  --accent: #d07a3c;
+  --surface: #fff7ec;
+  --surface-strong: #ffffff;
+  --line: rgba(32, 27, 22, 0.12);
+  --bg: #f4efe6;
+  --shadow: 0 18px 40px rgba(20, 16, 12, 0.12);
 }
 
 * {
   box-sizing: border-box;
-  font-family: 'Manrope', sans-serif;
+  font-family: 'Space Grotesk', sans-serif;
 }
 
 body {
   margin: 0;
   background:
-    radial-gradient(700px 320px at 10% 20%, rgba(31, 111, 74, 0.15), transparent 60%),
-    linear-gradient(180deg, #f1efe7, #e6f0ea);
+    radial-gradient(700px 320px at 10% 20%, rgba(208, 122, 60, 0.16), transparent 60%),
+    linear-gradient(180deg, #fffaf2, var(--bg));
   color: var(--ink);
   min-height: 100vh;
 }
 
 header {
   padding: 22px 28px;
-  background: rgba(255, 255, 255, 0.92);
+  background: rgba(255, 250, 242, 0.9);
   border-bottom: 1px solid var(--line);
   display: flex;
   justify-content: space-between;
@@ -38,19 +42,19 @@ header {
 
 header h1 {
   margin: 0;
-  font-family: 'Fraunces', serif;
-  font-size: 1.6rem;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.8rem;
 }
 
 #logout {
-  background: var(--accent);
+  background: linear-gradient(140deg, var(--accent), #e49a67);
   border: none;
   color: #fff;
   padding: 10px 18px;
   border-radius: 999px;
   font-weight: 600;
   cursor: pointer;
-  box-shadow: 0 10px 18px rgba(228, 87, 46, 0.25);
+  box-shadow: 0 10px 18px rgba(208, 122, 60, 0.25);
 }
 
 main {
@@ -60,7 +64,7 @@ main {
 }
 
 main h2 {
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   margin-bottom: 16px;
   color: var(--muted);
 }
@@ -72,11 +76,11 @@ main h2 {
 }
 
 .card {
-  background: var(--surface);
+  background: var(--surface-strong);
   padding: 18px;
-  border-radius: 16px;
-  box-shadow: 0 10px 24px rgba(20, 30, 24, 0.08);
-  border: 1px solid rgba(23, 36, 31, 0.08);
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+  border: 1px solid rgba(32, 27, 22, 0.08);
   animation: rise 0.5s ease both;
 }
 
@@ -90,17 +94,17 @@ main h2 {
 }
 
 .card button {
-  background: var(--accent);
-  color: white;
+  background: rgba(208, 122, 60, 0.14);
+  color: #a35027;
   border: none;
   padding: 10px 12px;
-  border-radius: 10px;
+  border-radius: 12px;
   cursor: pointer;
   font-weight: 600;
 }
 
 .card button:hover {
-  filter: brightness(0.95);
+  filter: brightness(0.97);
 }
 
 @keyframes rise {
@@ -111,5 +115,13 @@ main h2 {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@media (max-width: 900px) {
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
   }
 }

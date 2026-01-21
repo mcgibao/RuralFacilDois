@@ -1,12 +1,16 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Cormorant+Garamond:wght@600;700&display=swap');
 
 :root {
-  --ink: #131713;
-  --muted: #3d463e;
-  --primary: #1e6b3a;
-  --primary-dark: #13512b;
-  --line: rgba(19, 23, 19, 0.12);
-  --bg: #ffffff;
+  --ink: #201b16;
+  --muted: #6b5f55;
+  --primary: #2f6f4e;
+  --primary-strong: #214b36;
+  --accent: #d07a3c;
+  --surface: #fff7ec;
+  --surface-strong: #ffffff;
+  --line: rgba(32, 27, 22, 0.12);
+  --bg: #f4efe6;
+  --shadow: 0 18px 40px rgba(20, 16, 12, 0.14);
 }
 
 * {
@@ -15,9 +19,12 @@
 
 body {
   margin: 0;
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Space Grotesk', sans-serif;
   color: var(--ink);
-  background: var(--bg);
+  background:
+    radial-gradient(600px 280px at 15% 10%, rgba(208, 122, 60, 0.18), transparent 60%),
+    radial-gradient(700px 360px at 85% 15%, rgba(47, 111, 78, 0.16), transparent 65%),
+    linear-gradient(180deg, #fffaf2, var(--bg));
 }
 
 .page {
@@ -32,6 +39,12 @@ body {
   align-items: center;
   padding: 18px 56px;
   gap: 24px;
+  background: rgba(255, 250, 242, 0.85);
+  border-bottom: 1px solid var(--line);
+  backdrop-filter: blur(10px);
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
 .nav {
@@ -50,11 +63,15 @@ body {
 .brand {
   display: flex;
   justify-content: center;
+  align-items: center;
+  gap: 10px;
 }
 
 .brand img {
-  width: 36px;
-  height: 36px;
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  box-shadow: 0 8px 18px rgba(47, 111, 78, 0.25);
 }
 
 .actions {
@@ -64,53 +81,56 @@ body {
 }
 
 .btn {
-  padding: 8px 16px;
-  border-radius: 8px;
-  border: 1px solid var(--primary);
+  padding: 10px 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(47, 111, 78, 0.3);
   font-weight: 600;
   font-size: 0.85rem;
   text-decoration: none;
   color: var(--primary);
+  background: rgba(255, 255, 255, 0.8);
 }
 
 .btn.primary {
-  background: var(--primary);
+  background: linear-gradient(140deg, var(--primary), #3b8c61);
   color: #fff;
+  border: none;
+  box-shadow: 0 12px 24px rgba(47, 111, 78, 0.25);
 }
 
 .hero {
   flex: 1;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
   gap: 40px;
   align-items: center;
-  padding: 40px 56px 80px;
+  padding: 48px 56px 80px;
 }
 
 .hero-text h1 {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(2.2rem, 3.2vw, 3.2rem);
-  margin: 0 0 14px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.4rem, 4vw, 3.4rem);
+  margin: 0 0 16px;
 }
 
 .hero-text p {
-  margin: 0 0 24px;
+  margin: 0 0 26px;
   color: var(--muted);
-  line-height: 1.6;
-  max-width: 520px;
+  line-height: 1.65;
+  max-width: 540px;
 }
 
 .hero-text .cta {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  padding: 10px 18px;
+  padding: 12px 22px;
   background: var(--primary);
   color: #fff;
-  border-radius: 8px;
+  border-radius: 14px;
   font-weight: 600;
   text-decoration: none;
-  box-shadow: 0 6px 14px rgba(30, 107, 58, 0.2);
+  box-shadow: var(--shadow);
 }
 
 .hero-text .cta span {
@@ -120,11 +140,14 @@ body {
 .hero-visual {
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
 .hero-visual img {
-  max-width: 360px;
+  max-width: 380px;
   width: 100%;
+  border-radius: 28px;
+  box-shadow: 0 26px 50px rgba(20, 16, 12, 0.18);
 }
 
 @media (max-width: 900px) {
@@ -136,6 +159,8 @@ body {
 
   .nav {
     order: 1;
+    flex-wrap: wrap;
+    justify-content: center;
   }
 
   .actions {
@@ -145,10 +170,7 @@ body {
 
   .hero {
     grid-template-columns: 1fr;
-    padding: 24px;
-  }
-
-  .hero-text {
+    padding: 28px 24px 60px;
     text-align: center;
   }
 

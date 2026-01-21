@@ -3,16 +3,16 @@
 select {
   width: 100%;
   padding: 14px 16px;
-  border-radius: 12px;
-  border: 1px solid rgba(29, 44, 38, 0.16);
+  border-radius: 14px;
+  border: 1px solid rgba(32, 27, 22, 0.16);
   margin-bottom: 14px;
   font-size: 0.95rem;
-  background: #fff;
-  color: #1d2c26;
+  background: rgba(255, 255, 255, 0.9);
+  color: #201b16;
 }
 
 select:focus {
   outline: none;
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(31, 111, 74, 0.18);
+  box-shadow: 0 0 0 3px rgba(47, 111, 78, 0.18);
 }

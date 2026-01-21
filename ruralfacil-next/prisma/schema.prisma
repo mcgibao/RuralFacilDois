@@ -1,0 +1,131 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum TipoUsuario {
+  comprador
+  produtor
+  admin
+}
+
+model Usuario {
+  id          Int        @id @default(autoincrement())
+  nome        String     @db.VarChar(100)
+  email       String     @unique @db.VarChar(150)
+  senha       String     @db.VarChar(255)
+  tipo        TipoUsuario @default(comprador)
+  dataCriacao DateTime   @default(now())
+
+  produtor    Produtor?
+  carrinhos   Carrinho[]
+  pedidos     Pedido[]
+}
+
+model Produtor {
+  id              Int      @id @default(autoincrement())
+  usuarioId       Int
+  nomePropriedade String?  @db.VarChar(150)
+  cidade          String?  @db.VarChar(100)
+  estado          String?  @db.Char(2)
+
+  usuario        Usuario   @relation(fields: [usuarioId], references: [id])
+  produtos       Produto[]
+  notificacoes   NotificacaoProdutor[]
+
+  @@index([usuarioId])
+}
+
+model Produto {
+  id            Int      @id @default(autoincrement())
+  produtorId    Int
+  nome          String   @db.VarChar(150)
+  descricao     String?
+  preco         Decimal  @db.Decimal(10, 2)
+  estoque       Int      @default(0)
+  ativo         Boolean  @default(true)
+  imagem        String?  @db.VarChar(255)
+
+  produtor      Produtor @relation(fields: [produtorId], references: [id])
+  itensCarrinho CarrinhoItem[]
+  itensPedido   PedidoItem[]
+
+  @@index([produtorId])
+}
+
+model Carrinho {
+  id              Int      @id @default(autoincrement())
+  usuarioId       Int
+  dataAtualizacao DateTime @default(now())
+
+  usuario        Usuario   @relation(fields: [usuarioId], references: [id])
+  itens          CarrinhoItem[]
+
+  @@index([usuarioId])
+}
+
+model CarrinhoItem {
+  id         Int @id @default(autoincrement())
+  carrinhoId Int
+  produtoId  Int
+  quantidade Int
+
+  carrinho   Carrinho @relation(fields: [carrinhoId], references: [id])
+  produto    Produto  @relation(fields: [produtoId], references: [id])
+
+  @@index([carrinhoId])
+  @@index([produtoId])
+}
+
+model Pedido {
+  id          Int      @id @default(autoincrement())
+  usuarioId   Int
+  dataPedido  DateTime @default(now())
+  status      String   @default("aberto") @db.VarChar(30)
+  total       Decimal? @db.Decimal(10, 2)
+
+  usuario     Usuario  @relation(fields: [usuarioId], references: [id])
+  itens       PedidoItem[]
+  notificacoes NotificacaoProdutor[]
+
+  @@index([usuarioId])
+}
+
+model PedidoItem {
+  id            Int     @id @default(autoincrement())
+  pedidoId      Int
+  produtoId     Int
+  quantidade    Int
+  precoUnitario Decimal @db.Decimal(10, 2)
+
+  pedido        Pedido  @relation(fields: [pedidoId], references: [id])
+  produto       Produto @relation(fields: [produtoId], references: [id])
+
+  @@index([pedidoId])
+  @@index([produtoId])
+}
+
+model NotificacaoProdutor {
+  id          Int      @id @default(autoincrement())
+  produtorId  Int
+  pedidoId    Int
+  mensagem    String
+  lida        Boolean  @default(false)
+  dataCriacao DateTime @default(now())
+
+  produtor    Produtor @relation(fields: [produtorId], references: [id])
+  pedido      Pedido   @relation(fields: [pedidoId], references: [id])
+
+  @@index([produtorId])
+  @@index([pedidoId])
+}
